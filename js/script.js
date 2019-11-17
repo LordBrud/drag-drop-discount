@@ -3,19 +3,27 @@ $(document).ready(function () {
         connectToSortable: "#sortable",
         helper: "clone",
         revert: "invalid",
+        start: function (event, ui) {
+            $(this).draggable('instance').offset.click = {
+                left: Math.floor(ui.helper.width() / 2),
+                top: Math.floor(ui.helper.height() / 2)
+            };
+        },
         stop: function () {
             $('.draggable').css('width', '').css('height', '');
             if (DragDrop.autosave) {
                 save_current_sequence();
             }
         },
-        cursorAt: {top: 20, left: 30},
     });
     $("#sortable").sortable({
         revert: true,
         placeholder: "placeholder-highlight"
     });
+    $('.card-body .for-if-operands-dropdown').append(get_dropdown('operands'));
+    $('.card-body .for-if-variable-dropdown').append(get_dropdown('variable'));
 });
+
 let DragDrop = {};
 DragDrop.autosave = true;
 
@@ -60,8 +68,7 @@ $('#getPositions').click(function () {
                 });
             }
         });
-    }
-    else {
+    } else {
         Toast.fire({
             icon: 'info',
             title: 'Already up to date',
@@ -76,7 +83,6 @@ function get_current_sequence() {
     for (var i = 0 in $elements) {
         if ($elements.hasOwnProperty(i)) {
             let identifier = $elements[i].dataset.identifier;
-            console.log(identifier);
             if (identifier && identifier !== '') {
                 sequence.push(identifier);
             }
@@ -131,6 +137,16 @@ function save_sequence(sequence) {
 
 function save_current_sequence() {
     save_sequence(get_current_sequence());
+}
+
+function get_dropdown(dropdown) {
+    console.log(dropdown);
+    let call = $.ajax({
+        method: "POST",
+        url: "handler.php?m=get_" + dropdown + "_dropdown",
+        async: false,
+    });
+    return call.responseText;
 }
 
 Array.prototype.equals = function (array) {

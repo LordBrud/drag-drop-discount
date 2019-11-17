@@ -1,15 +1,15 @@
 {
   "blocks": {
-    "if" : {
-      "articleTotal" : "Artikeltotal",
-
+    "if": {
+      "articleTotal": "Artikeltotal",
+      "kundenID": "Kunden ID"
     }
   },
-  "operands" : {
-    "<" : "Kleiner als",
-    ">" : "Grösser als",
-    "<=" : "Kleiner gleich",
-    ">=" : "Grösser gleich",
-    "==" : "Gleich"
+  "operands": {
+    "<": "Kleiner als",
+    ">": "Grösser als",
+    "<=": "Kleiner gleich",
+    ">=": "Grösser gleich",
+    "==": "Gleich"
   }
 }
