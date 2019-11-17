@@ -1,0 +1,24 @@
+.active,
+.inactive {
+    border: 1px solid #BBBBBB;
+    padding: 0;
+}
+
+.active .card,
+.inactive .card {
+    margin: 5px;
+    min-width: 95%;
+}
+
+.active > .card:first-child,
+.inactive > .card:first-child {
+    background: rgba(0, 0, 0, .5);
+}
+
+.placeholder-highlight{
+    border: 1px solid #dad55e;
+    background: #fffa90;
+    height: 50px;
+    color: #777620;
+    margin: 5px;
+}

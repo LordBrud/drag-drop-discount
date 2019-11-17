@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="inactive col-5">
+            <div class="card snap">
+                <h5 class="card-header primary-color white-text">Choose new elements</h5>
+            </div>
+            <div id="panel_1" class="draggable card snap" data-identifier="panel_1">
+                <h5 class="card-header primary-color white-text">Wert 1</h5>
+            </div>
+            <div id="panel_2" class="draggable card snap" data-identifier="panel_2">
+                <h5 class="card-header deep-orange white-text">Wert 2</h5>
+            </div>
+        </div>
+
+        <div class="active offset-1 col-6">
+            <div class="card snap">
+                <h5 class="card-header primary-color white-text">Sort elements</h5>
+            </div>
+            <div id="sortable">
+                <div class="draggable card snap" data-identifier="panel_1">
+                    <h5 class="card-header primary-color white-text">Wert 1</h5>
+                </div>
+                <div class="draggable card snap" data-identifier="panel_2">
+                    <h5 class="card-header deep-orange white-text">Wert 2</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button id="savePositions" type="button" class="btn btn-primary btn-lg btn-block my-3">Save</button>
+            <button id="getPositions" type="button" class="btn btn-secondary btn-lg btn-block my-3">Load</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast_saved" class="toast" data-autohide="true" data-delay="4000" style="position: absolute; top: 3%; right: 3%;">
+    <div class="toast-body text-success">
+        Sequence successfully saved
+    </div>
+</div>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
