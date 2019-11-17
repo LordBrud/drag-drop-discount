@@ -19,8 +19,11 @@ $('#savePositions').click(function () {
 });
 
 $('#getPositions').click(function () {
-    if (get_saved_sequence() === get_current_sequence() || confirm('There are unsaved changes. Continue?')) {
-        print_saved_sequence();
+    let saved_sequence = get_saved_sequence();
+    if (!saved_sequence.equals(get_current_sequence())) {
+        if (confirm('There are unsaved changes. Continue?')) {
+            print_sequence(get_saved_sequence());
+        }
     }
 });
 
@@ -48,10 +51,9 @@ function get_saved_sequence() {
     return JSON.parse(call.responseText);
 }
 
-function print_saved_sequence() {
+function print_sequence(sequence) {
     let $sortable = $("#sortable");
     $sortable.html('');
-    let sequence = get_saved_sequence();
     for (var i = 0 in sequence) {
         if (sequence.hasOwnProperty(i)) {
             let $element = $('#' + sequence[i]).clone();
@@ -70,3 +72,29 @@ function save_sequence(sequence) {
         $('#toast_saved').toast('show');
     });
 }
+
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;
+        }
+        else if (this[i] != array[i]) {
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;
+        }
+    }
+    return true;
+};
+// Hide method from for-in loops
+Object.defineProperty(Array.prototype, "equals", {enumerable: false});
