@@ -1,0 +1,15 @@
+{
+  "blocks": {
+    "if" : {
+      "articleTotal" : "Artikeltotal",
+
+    }
+  },
+  "operands" : {
+    "<" : "Kleiner als",
+    ">" : "Grösser als",
+    "<=" : "Kleiner gleich",
+    ">=" : "Grösser gleich",
+    "==" : "Gleich"
+  }
+}

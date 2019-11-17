@@ -4,7 +4,10 @@ $(document).ready(function () {
         helper: "clone",
         revert: "invalid",
         stop: function () {
-            $('.draggable').css('width', '').css('height', '')
+            $('.draggable').css('width', '').css('height', '');
+            if (DragDrop.autosave) {
+                save_current_sequence();
+            }
         },
         cursorAt: {top: 20, left: 30},
     });
@@ -13,17 +16,56 @@ $(document).ready(function () {
         placeholder: "placeholder-highlight"
     });
 });
+let DragDrop = {};
+DragDrop.autosave = true;
 
 $('#savePositions').click(function () {
-    save_sequence(get_current_sequence());
+    save_current_sequence();
+});
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
 });
 
 $('#getPositions').click(function () {
     let saved_sequence = get_saved_sequence();
     if (!saved_sequence.equals(get_current_sequence())) {
-        if (confirm('There are unsaved changes. Continue?')) {
-            print_sequence(get_saved_sequence());
-        }
+        Swal.fire({
+            title: 'Unsaved changes',
+            text: "You have unsaved changes. Are you sure?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                print_sequence(get_saved_sequence());
+                Toast.fire({
+                    title: 'Success',
+                    text: 'Successfully loaded',
+                    icon: 'success'
+                })
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Toast.fire({
+                    icon: 'info',
+                    title: 'Cancelled',
+                    timer: 2000
+                });
+            }
+        });
+    }
+    else {
+        Toast.fire({
+            icon: 'info',
+            title: 'Already up to date',
+        });
     }
 });
 
@@ -34,7 +76,8 @@ function get_current_sequence() {
     for (var i = 0 in $elements) {
         if ($elements.hasOwnProperty(i)) {
             let identifier = $elements[i].dataset.identifier;
-            if (identifier !== '') {
+            console.log(identifier);
+            if (identifier && identifier !== '') {
                 sequence.push(identifier);
             }
         }
@@ -67,10 +110,27 @@ function save_sequence(sequence) {
     $.ajax({
         method: "POST",
         url: "handler.php?m=put",
-        data: {sequence}
-    }).success(function () {
-        $('#toast_saved').toast('show');
+        data: {sequence},
+        success: function () {
+            if (DragDrop.autosave) {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Saved',
+                    timer: 2000
+                });
+            } else {
+                Swal.fire(
+                    'Success',
+                    'Successfully saved sequence',
+                    'success'
+                )
+            }
+        }
     });
+}
+
+function save_current_sequence() {
+    save_sequence(get_current_sequence());
 }
 
 Array.prototype.equals = function (array) {
@@ -82,14 +142,13 @@ Array.prototype.equals = function (array) {
     if (this.length != array.length)
         return false;
 
-    for (var i = 0, l=this.length; i < l; i++) {
+    for (var i = 0, l = this.length; i < l; i++) {
         // Check if we have nested arrays
         if (this[i] instanceof Array && array[i] instanceof Array) {
             // recurse into the nested arrays
             if (!this[i].equals(array[i]))
                 return false;
-        }
-        else if (this[i] != array[i]) {
+        } else if (this[i] != array[i]) {
             // Warning - two different object instances will never be equal: {x:20} != {x:20}
             return false;
         }
