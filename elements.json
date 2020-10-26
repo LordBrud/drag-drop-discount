@@ -3,6 +3,11 @@
     "if": {
       "articleTotal": "Artikeltotal",
       "kundenID": "Kunden ID"
+    },
+    "for": {
+      "start": "0",
+      "end": "10",
+      "stepp": "++"
     }
   },
   "operands": {
