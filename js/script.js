@@ -80,7 +80,7 @@ $('#getPositions').click(function () {
 function get_current_sequence() {
     let $elements = $('#sortable')[0].children;
     let sequence = [];
-    for (var i = 0 in $elements) {
+    for (var i in $elements) {
         if ($elements.hasOwnProperty(i)) {
             let identifier = $elements[i].dataset.identifier;
             if (identifier && identifier !== '') {
@@ -103,7 +103,7 @@ function get_saved_sequence() {
 function print_sequence(sequence) {
     let $sortable = $("#sortable");
     $sortable.html('');
-    for (var i = 0 in sequence) {
+    for (var i in sequence) {
         if (sequence.hasOwnProperty(i)) {
             let $element = $('#' + sequence[i]).clone();
             $element.attr("id", "");
@@ -155,7 +155,7 @@ Array.prototype.equals = function (array) {
         return false;
 
     // compare lengths - can save a lot of time
-    if (this.length != array.length)
+    if (this.length !== array.length)
         return false;
 
     for (var i = 0, l = this.length; i < l; i++) {
