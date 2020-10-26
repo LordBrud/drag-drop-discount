@@ -1,8 +1,8 @@
 {
   "blocks": {
     "if": {
-      "articleTotal": "Artikeltotal",
-      "kundenID": "Kunden ID"
+      "foo": "Foo",
+      "bar": "Bar"
     },
     "for": {
       "start": "0",
@@ -11,10 +11,11 @@
     }
   },
   "operands": {
-    "<": "Kleiner als",
-    ">": "Grösser als",
-    "<=": "Kleiner gleich",
-    ">=": "Grösser gleich",
-    "==": "Gleich"
+    "<": "lower then (<)",
+    ">": "greater then (>)",
+    "<=": "lower or equal (<=)",
+    ">=": "greater or equal (>=)",
+    "==": "equal (==)",
+    "===": "equal (===)"
   }
 }
